@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  //Creating the new expense method that add a new expense from the input to the list
+  //Creating the new expense method that adds a new expense from the input to the list
   void addNewExpense(Expense expense) {
     setState(() {
       _registeredExpense.add(expense);
