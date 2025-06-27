@@ -30,11 +30,19 @@ class _HomeState extends State<Home> {
 
   void openWhenAddClicked() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (ctx) {
-        return NewExpense();
+        return NewExpense(onAddExpense: addNewExpense);
       },
     );
+  }
+
+  //Creating the new expense method that add a new expense from the input to the list
+  void addNewExpense(Expense expense) {
+    setState(() {
+      _registeredExpense.add(expense);
+    });
   }
 
   @override

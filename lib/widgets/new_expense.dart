@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -30,6 +32,47 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  //Checks if the form fields are empty or not
+  void _selectExpenseData() {
+    final eneterdAmount = double.tryParse(
+      _amountController.text,
+    ); //tryParse converts text amount to number. tryParse will return 'abc' as null; '123.11' as 123.11
+    final amountIsInvalid = eneterdAmount == null || eneterdAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      //show error message
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('Invalid Input'),
+          content: (Text('Please select name, amount and date correctly')),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: Text('Okay'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    //Invoke the addExpense method to add new items from form to list
+    widget.onAddExpense(
+      Expense(
+        title: _titleController.text,
+        amout: eneterdAmount,
+        time: _selectedDate!,
+        category: _selectedCategory!,
+      ),
+    );
+
+    Navigator.pop(context);
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -40,7 +83,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -118,10 +161,7 @@ class _NewExpenseState extends State<NewExpense> {
                     ),
                     const SizedBox(width: 10),
                     ElevatedButton(
-                      onPressed: () {
-                        print(_titleController.text);
-                        print(_amountController.text);
-                      },
+                      onPressed: _selectExpenseData,
                       child: Text('Save'),
                     ),
                   ],
