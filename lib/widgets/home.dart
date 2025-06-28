@@ -45,6 +45,13 @@ class _HomeState extends State<Home> {
     });
   }
 
+  //Remove a expense from the UI and _registeredList
+  void removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpense.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +67,12 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             Text('Chart'),
-            Expanded(child: ExpenseList(expenses: _registeredExpense)),
+            Expanded(
+              child: ExpenseList(
+                onRemoveExpense: removeExpense,
+                expenses: _registeredExpense,
+              ),
+            ),
           ],
         ),
       ),
