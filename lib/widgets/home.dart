@@ -17,13 +17,13 @@ class _HomeState extends State<Home> {
     //First Dummy Expense
     Expense(
       title: 'Flutter Course',
-      amout: 19.99,
+      amout: 8000,
       time: DateTime.now(),
       category: Category.work,
     ),
     Expense(
       title: 'Movies',
-      amout: 14.99,
+      amout: 545.38,
       time: DateTime.now(),
       category: Category.leisure,
     ),
@@ -95,12 +95,17 @@ class _HomeState extends State<Home> {
           IconButton(onPressed: openWhenAddClicked, icon: Icon(Icons.add)),
         ],
         title: Text('Expense Tracker'),
-        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
           children: [
-            Text('Chart'),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                'Your Expense List',
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+            ),
             Expanded(child: mainContent),
           ],
         ),

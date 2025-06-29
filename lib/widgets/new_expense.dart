@@ -89,17 +89,27 @@ class _NewExpenseState extends State<NewExpense> {
           TextField(
             controller: _titleController,
             maxLength: 50,
-            decoration: InputDecoration(label: Text('Name of Expense')),
+            style: Theme.of(context).textTheme.displayMedium,
+            decoration: InputDecoration(
+              label: Text(
+                'Name of Expense',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ),
           ),
           Row(
             children: [
               Expanded(
                 child: TextField(
                   controller: _amountController,
+                  style: Theme.of(context).textTheme.displayMedium,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    prefix: Text('\$'),
-                    label: Text('Amount'),
+                    prefix: Text('৳'),
+                    label: Text(
+                      'Amount',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ),
                 ),
               ),
@@ -109,10 +119,13 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      _selectedDate == null
-                          ? 'No Date Selected'
-                          : formatter.format(_selectedDate!),
+                    Flexible(
+                      child: Text(
+                        _selectedDate == null
+                            ? 'No Date Selected'
+                            : formatter.format(_selectedDate!),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     IconButton(
                       onPressed: _datePicker,
@@ -131,13 +144,17 @@ class _NewExpenseState extends State<NewExpense> {
                 SizedBox(height: 16),
                 Text('Select a Category'),
                 DropdownButton(
+                  borderRadius: BorderRadius.circular(14),
                   hint: Text('No Item Selected'),
                   value: _selectedCategory,
                   items: Category.values
                       .map(
                         (category) => DropdownMenuItem(
                           value: category,
-                          child: Text(category.name.toUpperCase()),
+                          child: Text(
+                            category.name.toUpperCase(),
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
                         ),
                       )
                       .toList(),
